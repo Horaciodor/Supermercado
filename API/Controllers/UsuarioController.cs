@@ -2,6 +2,7 @@
 using Core.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using TrabalhoFinal._01_Services;
+using Core._03_Entidades.DTO;
 
 namespace API.Controllers;
 
@@ -22,6 +23,12 @@ public class UsuarioController : ControllerBase
     {
         Usuario usuario = _mapper.Map<Usuario>(usuarioDTO);
         _service.Adicionar(usuario);
+    }
+    [HttpPost("Fazer-Login")]
+    public Usuario FazerLogin(UsuarioLoginDTO usuariologin)
+    {
+        Usuario usuario = _service.FazerLogin(usuariologin);
+        return usuario;
     }
     [HttpGet("listar-usuario")]
     public List<Usuario> ListarAluno()

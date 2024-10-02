@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Entidades
+namespace FrontEnd.Models
 {
     public class Usuario
     {
@@ -13,6 +13,7 @@ namespace Core.Entidades
         public string Username { get; set; }
         public string Senha { get; set; }
         public string Email { get; set; }
+
         public override string ToString()
         {
             return $"Id: {Id} - Nome: {Nome} - Email: {Email} - Senha: {Senha}";
