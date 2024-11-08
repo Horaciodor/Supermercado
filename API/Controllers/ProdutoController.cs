@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Core._01_Services.Interfaces;
 using Core.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using TrabalhoFinal._01_Services;
@@ -9,12 +10,12 @@ namespace API.Controllers;
 [Route("[controller]")]
 public class ProdutoController : ControllerBase
 {
-    private readonly ProdutoService _service;
+    private readonly IProdutoService _service;
     private readonly IMapper _mapper;
-    public ProdutoController(IConfiguration config, IMapper mapper)
+    public ProdutoController(IConfiguration config, IMapper mapper, IProdutoService produtoService)
     {
         string _config = config.GetConnectionString("DefaultConnection");
-        _service = new ProdutoService(_config);
+        _service = produtoService;
         _mapper = mapper;
     }
     [HttpPost("adicionar-produto")]

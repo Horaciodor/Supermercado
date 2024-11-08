@@ -7,44 +7,43 @@ using System.Data.SQLite;
 
 namespace TrabalhoFinal._02_Repository;
 
-public class ProdutoRepository : IProdutoRepository
+public class EnderecoRepository : IEnderecoRepository
 {
     private readonly string ConnectionString;
-    public ProdutoRepository(IConfiguration config)
+    public EnderecoRepository(IConfiguration config)
     {
         ConnectionString = config.GetConnectionString("DefaultConnection");
     }
-    public void Adicionar(Produto produto)
+    public void Adicionar(Endereco endereco)
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        connection.Insert<Produto>(produto);
+        connection.Insert<Endereco>(endereco);
     }
     public void Remover(int id)
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        Produto produto = BuscarPorId(id);
-        connection.Delete<Produto>(produto);
+        Endereco endereco = BuscarPorId(id);
+        connection.Delete<Endereco>(endereco);
     }
-    public void Editar(Produto produto)
+    public void Editar(Endereco endereco)
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        connection.Update<Produto>(produto);
+        connection.Update<Endereco>(endereco);
     }
-    public List<Produto> Listar()
+    public List<Endereco> Listar()
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        return connection.GetAll<Produto>().ToList();
+        return connection.GetAll<Endereco>().ToList();
     }
-    public Produto BuscarPorId(int id)
+    public List<Endereco> ListarEnderecoAluno(int usuarioId)
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        return connection.Get<Produto>(id);
+        List<Endereco> list = connection.Query<Endereco>($"SELECT Id, Rua, Bairro, Numero, UsuarioId FROM Enderecos WHERE UsuarioId = {usuarioId}").ToList();
+        return list; 
     }
-    public List<Produto> ListarProdutoDoUsuario(int usuarioId)
+    public Endereco BuscarPorId(int id)
     {
         using var connection = new SQLiteConnection(ConnectionString);
-        List<Produto> list = connection.Query<Produto>($"SELECT Id, Nome, Preco FROM Produtos WHERE UsuarioId = {usuarioId}").ToList();
-        
-        return list;
+        return connection.Get<Endereco>(id);
     }
 }
